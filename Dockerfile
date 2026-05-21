@@ -7,6 +7,10 @@ RUN echo 'root:mypassword123' | chpasswd
 RUN sed -i 's/#PermitRootLogin prohibit-password/PermitRootLogin yes/' /etc/ssh/sshd_config
 RUN sed -i 's/#PasswordAuthentication yes/PasswordAuthentication yes/' /etc/ssh/sshd_config
 
+WORKDIR /app
+COPY . .
+RUN npm install
+
 EXPOSE 80
 
-CMD service ssh start && node server.js
+CMD service ssh start && node /app/server.js
